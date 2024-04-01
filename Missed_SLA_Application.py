@@ -1,5 +1,5 @@
-
-import plotly.validators.surface
+from plotly.validators import surface
+#import plotly.validators.surface
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
