@@ -1,4 +1,4 @@
-from plotly.validators import surface
+#from plotly.validators import surface
 #import plotly.validators.surface
 import pandas as pd
 import plotly.express as px
