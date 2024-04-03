@@ -1,5 +1,6 @@
-#from plotly.validators import surface
-#import plotly.validators.surface
+
+import plotly.validators.surface
+from plotly.validators import surface
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -9,7 +10,7 @@ import numpy as np
 st.set_page_config(page_title="Missed SLA Dashboard", page_icon=":bar_chart:", layout="wide")
 
 st.title("Missed SLA Dashboard")
-st.markdown("_Prototype v1.1.0_")
+st.markdown("_v1.1.0_")
 
 with st.sidebar:
     st.header("Configuration")
@@ -79,7 +80,7 @@ for column in pivot_table.columns:
     data.append(trace)
 
 # Layout settings
-layout = go.Layout(title="Missed Reasons Count per SMM",
+layout = go.Layout(title="Root cause per SMM",
                     xaxis=dict(title='Month'),
                     yaxis=dict(title='Count'))
 # Create line graph figure
@@ -101,7 +102,7 @@ df_grouped = df_selection.groupby('SMM').size().reset_index(name='Count')
 df_grouped.reset_index(drop=True, inplace=True)
 
 fig_pie = px.pie(df_grouped, names='SMM', values='Count',
-                 title="Missed Reasons Count by SMM",
+                 title="Missed Reasons percentage by SMM",
                  labels={'SMM': 'SMM', 'Count': 'Count'},
                  hover_data=['Count'],
                  hole=0.4)
@@ -119,7 +120,7 @@ pivot_table = pivot_table.iloc[:, 0:]
 styled_table = pivot_table.style \
     .set_table_styles([{'selector': 'th', 'props': [('background-color', 'red'), ('color', 'white')]}])\
     .set_properties(**{'text-align': 'center'}) \
-    .set_caption("Missed Reasons Count by Month")
+    .set_caption("Missed Reasons by Month")
 
 #st.subheader("Missed SLA by Root Cause")
 #st.write(styled_table)
@@ -132,7 +133,7 @@ with fr1:
     st.write(styled_table)
 
 with fr2:
-    st.subheader("Count of Root Cause per SMM")
+    st.subheader("Root Cause per SMM Count")
     st.plotly_chart(fig2)
 
 #################################################################################################
@@ -146,7 +147,7 @@ with f1:
     st.plotly_chart(fig)
 
 with f2:
-    st.subheader("Pie Chart - Missed Reasons Count by SMM")
+    st.subheader("Missed Reasons percentage by SMM")
     st.plotly_chart(fig_pie)
 
 st.markdown("-----------------------------------------------------")
