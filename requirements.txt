@@ -1,6 +1,6 @@
 plotly==5.4.0
 pandas==1.2.3
 openpyxl==3.0.7
-pip install --upgrade streamlit
+pip3 install --upgrade streamlit
 
 
