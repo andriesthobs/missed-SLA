@@ -30,9 +30,6 @@ df = load_data(uploaded_file)
 # Convert the date format to 'Mon-YY'
 df['Month'] = pd.to_datetime(df['Month']).dt.strftime('%b-%y')
 
-with st.expander("Data Preview"):
-    st.dataframe(df)
-
 # Sidebar
 st.sidebar.header("Please filter here :")
 
@@ -151,3 +148,6 @@ with f2:
     st.plotly_chart(fig_pie)
 
 st.markdown("-----------------------------------------------------")
+
+with st.expander("Data Preview"):
+    st.dataframe(df)
