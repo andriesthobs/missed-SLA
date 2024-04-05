@@ -30,6 +30,7 @@ df = load_data(uploaded_file)
 # Convert the date format to 'Mon-YY'
 df['Month'] = pd.to_datetime(df['Month']).dt.strftime('%b-%y')
 
+
 # Sidebar
 st.sidebar.header("Please filter here :")
 
@@ -146,9 +147,45 @@ with f1:
 with f2:
     st.subheader("Missed Reasons percentage by SMM")
     st.plotly_chart(fig_pie)
+##################################################################################################
+st.markdown("-----------------------------------------------------")
+df_grouped = df_selection.groupby(['Month', 'Customer Name']).size().reset_index(name='Count')
+df_pivot = df_grouped.pivot(index='Month', columns='Customer Name', values='Count').fillna(0)
+
+fig = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
+             title="Customer Missed Per Month",
+             labels={'value': 'Count', 'index': 'Month'},
+             barmode='stack')
+##################################################################################################
+
+
+###################################################################################################
+st.markdown("-----------------------------------------------------")
+df_grouped = df_selection.groupby(['Month', 'SIP created']).size().reset_index(name='Count')
+df_pivot = df_grouped.pivot(index='Month', columns='SIP created', values='Count').fillna(0)
+
+figSIP = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
+             title="SIP's created Per Month",
+             labels={'value': 'Count', 'index': 'Month'},
+             barmode='group')
+###################################################################################################
+colf1,colf2=st.columns(2)
+
+with colf1:
+    st.plotly_chart(fig)
+with colf2:
+    st.plotly_chart(figSIP)
 
 st.markdown("-----------------------------------------------------")
+with st.expander("Missed SLA Preview"):
 
-with st.expander("Data Preview"):
-    st.dataframe(df)
-st.markdown("-----------------------------------------------------")
+    selected_month=st.multiselect('Select Month(s)',df['Month'].unique())
+    selected_smm=st.multiselect('Select SMM(s)',df['SMM'].unique())
+    selected_sm=st.multiselect('Select SM(s)',df['Service Manager'].unique())
+
+    filtered_df=df[
+        (df['Month'].isin(selected_month)) &
+        (df['SMM'].isin(selected_smm))&
+        (df['Service Manager'].isin(selected_sm))
+    ]
+    st.dataframe(filtered_df)
