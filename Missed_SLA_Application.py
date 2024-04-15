@@ -156,6 +156,13 @@ fig = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
              title="Customer Missed Per Month",
              labels={'value': 'Count', 'index': 'Month'},
              barmode='stack')
+
+fig.update_traces(showlegend=True, selector=dict(type='bar'))
+fig.update_layout(legend=dict(traceorder='normal'))
+
+fig.update_layout(
+    clickmode='event+select'
+)
 ##################################################################################################
 
 
