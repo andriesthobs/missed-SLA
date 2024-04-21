@@ -188,7 +188,6 @@ with colf2:
     st.plotly_chart(figSIP)
 
 ####################################Credit Graph####################################################
-st.markdown("-----------------------------------------------------")
 df_grouped = df_selection.groupby(['Month', 'SIP created']).size().reset_index(name='Count')
 df_pivot = df_grouped.pivot(index='Month', columns='SIP created', values='Count').fillna(0)
 
@@ -198,7 +197,7 @@ figSIP = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
              barmode='group')
 
 #####################################Country Graph###################################################
-st.markdown("-----------------------------------------------------")
+
 df_grouped = df_selection.groupby(['Month', 'Credit']).size().reset_index(name='Count')
 df_pivot = df_grouped.pivot(index='Month', columns='Credit', values='Count').fillna(0)
 
@@ -208,7 +207,7 @@ figCred = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
              barmode='group')
 
 #####################################################################################################
-st.markdown("-----------------------------------------------------")
+
 df_grouped = df_selection.groupby(['Month', 'Country']).size().reset_index(name='Count')
 df_pivot = df_grouped.pivot(index='Month', columns='Country', values='Count').fillna(0)
 
