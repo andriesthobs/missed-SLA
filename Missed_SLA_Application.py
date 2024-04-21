@@ -148,7 +148,9 @@ with f2:
     st.subheader("Missed Reasons percentage by SMM")
     st.plotly_chart(fig_pie)
 ##################################################################################################
-st.markdown("-----------------------------------------------------")
+import plotly.express as px
+
+# Grouping and pivoting
 df_grouped = df_selection.groupby(['Month', 'Customer Name']).size().reset_index(name='Count')
 df_pivot = df_grouped.pivot(index='Month', columns='Customer Name', values='Count').fillna(0)
 
@@ -163,6 +165,8 @@ fig.update_layout(legend=dict(traceorder='normal'))
 fig.update_layout(
     clickmode='event+select'
 )
+
+
 ##################################################################################################
 
 
@@ -182,6 +186,47 @@ with colf1:
     st.plotly_chart(fig)
 with colf2:
     st.plotly_chart(figSIP)
+
+####################################Credit Graph####################################################
+st.markdown("-----------------------------------------------------")
+df_grouped = df_selection.groupby(['Month', 'SIP created']).size().reset_index(name='Count')
+df_pivot = df_grouped.pivot(index='Month', columns='SIP created', values='Count').fillna(0)
+
+figSIP = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
+             title="SIP's created Per Month",
+             labels={'value': 'Count', 'index': 'Month'},
+             barmode='group')
+
+#####################################Country Graph###################################################
+st.markdown("-----------------------------------------------------")
+df_grouped = df_selection.groupby(['Month', 'Credit']).size().reset_index(name='Count')
+df_pivot = df_grouped.pivot(index='Month', columns='Credit', values='Count').fillna(0)
+
+figCred = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
+             title="Credit created Per Month",
+             labels={'value': 'Count', 'index': 'Month'},
+             barmode='group')
+
+#####################################################################################################
+st.markdown("-----------------------------------------------------")
+df_grouped = df_selection.groupby(['Month', 'Country']).size().reset_index(name='Count')
+df_pivot = df_grouped.pivot(index='Month', columns='Country', values='Count').fillna(0)
+
+figCount = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
+             title="Country Missed Per Month",
+             labels={'value': 'Count', 'index': 'Month'},
+             barmode='group')
+
+#########################################################################################
+ColCred,ColdCountry= st.columns(2)
+
+
+with ColCred:
+
+    st.plotly_chart(figCred)
+
+with ColdCountry:
+    st.plotly_chart(figCount)
 
 st.markdown("-----------------------------------------------------")
 with st.expander("Missed SLA Preview"):
