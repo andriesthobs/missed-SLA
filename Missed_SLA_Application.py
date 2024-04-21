@@ -217,6 +217,7 @@ figCount = px.bar(df_pivot, x=df_pivot.index, y=df_pivot.columns,
              barmode='group')
 
 #########################################################################################
+st.markdown("-----------------------------------------------------")
 ColCred,ColdCountry= st.columns(2)
 
 
