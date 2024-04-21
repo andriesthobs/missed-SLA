@@ -1,4 +1,3 @@
-
 import plotly.validators.surface
 from plotly.validators import surface
 import pandas as pd
@@ -28,8 +27,7 @@ def load_data(path: str):
 df = load_data(uploaded_file)
 
 # Convert the date format to 'Mon-YY'
-df['Month'] = pd.to_datetime(df['Month']).dt.strftime('%b-%y')
-
+df['Month'] = pd.to_datetime(df['Month'], errors='coerce').dt.strftime('%b-%y')
 
 # Sidebar
 st.sidebar.header("Please filter here :")
@@ -110,7 +108,7 @@ fig_pie.update_traces(textposition='inside', textinfo='label+percent')
 
 pivot_table = df.pivot_table(index='Missed Reason', columns='Month', aggfunc='size', fill_value=0)
 
-pivot_table.columns = [f"{month} Missed" for month in pivot_table.columns]
+pivot_table.columns = [f"{month} Missed" for month in sorted(pivot_table.columns, key=lambda x: pd.to_datetime(x, format='%b-%y'))]
 
 pivot_table.reset_index(inplace=True)
 pivot_table = pivot_table.iloc[:, 0:]
@@ -231,7 +229,7 @@ with ColdCountry:
 st.markdown("-----------------------------------------------------")
 with st.expander("Missed SLA Preview"):
 
-    selected_month=st.multiselect('Select Month(s)',df['Month'].unique())
+    selected_month=st.multiselect('Select Month(s)',sorted(df['Month'].unique(), key=lambda x: pd.to_datetime(x, format='%b-%y')), format_func=lambda x: x)
     selected_smm=st.multiselect('Select SMM(s)',df['SMM'].unique())
     selected_sm=st.multiselect('Select SM(s)',df['Service Manager'].unique())
 
@@ -240,4 +238,4 @@ with st.expander("Missed SLA Preview"):
         (df['SMM'].isin(selected_smm))&
         (df['Service Manager'].isin(selected_sm))
     ]
-    st.dataframe(filtered_df)
+    st.dataframe(filtered_df) 
