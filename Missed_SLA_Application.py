@@ -9,7 +9,7 @@ import numpy as np
 st.set_page_config(page_title="Missed SLA Dashboard", page_icon=":bar_chart:", layout="wide")
 
 st.title("Missed SLA Dashboard")
-st.markdown("_v1.1.0_")
+st.markdown("_v1.1.1_")
 
 with st.sidebar:
     st.header("Configuration")
