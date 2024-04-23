@@ -129,7 +129,7 @@ with fr1:
     st.write(styled_table)
 
 with fr2:
-    st.subheader("Root Cause Count per SMM Count")
+    st.subheader("Root Cause per SMM Count")
     st.plotly_chart(fig2)
 
 #################################################################################################
