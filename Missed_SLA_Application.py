@@ -76,7 +76,7 @@ for column in pivot_table.columns:
     data.append(trace)
 
 # Layout settings
-layout = go.Layout(title="Root cause per SMM",
+layout = go.Layout(title="Root  cause count per SMM",
                     xaxis=dict(title='Month'),
                     yaxis=dict(title='Count'))
 # Create line graph figure
@@ -129,7 +129,7 @@ with fr1:
     st.write(styled_table)
 
 with fr2:
-    st.subheader("Root Cause per SMM Count")
+    st.subheader("Root Cause Count per SMM Count")
     st.plotly_chart(fig2)
 
 #################################################################################################
