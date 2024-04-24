@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="The Dashboard",
-    page_icon="_bar",
+    page_icon=":bar_chart",
 
 )
 
